@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+
+  database:
+    image: "postgres:9.6"
+    environment:
+      - POSTGRES_USER=
+      - POSTGRES_DB=
+      - POSTGRES_PASSWORD=
+    networks:
+      - omero-network
+    volumes:
+      - "omero-db-volume:/var/lib/postgresql/data"
+
+  omeroserver:
+    image: "openmicroscopy/omero-server:5.6"
+    environment:
+      - CONFIG_omero_db_host=
+      - CONFIG_omero_db_user=
+      - CONFIG_omero_db_pass=
+      - CONFIG_omero_db_name=
+      - ROOTPASS=
+    networks:
+      - omero-network
+    ports:
+      - 4063:4063
+      - 4064:4064
+    volumes:
+      - "omero-server-volume:/OMERO"
+
+  omeroweb:
+    image: "openmicroscopy/omero-web-standalone:master"
+    environment:
+      - OMEROHOST=omeroserver
+    networks:
+      - omero-network
+    ports:
+      - "4080:4080"
+
+networks:
+  omero-network:
+
+volumes:
+  omero-db-volume:
+  omero-server-volume:
