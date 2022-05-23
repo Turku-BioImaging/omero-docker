@@ -14,7 +14,7 @@ services:
       - "omero-db-volume:/var/lib/postgresql/data"
 
   omeroserver:
-    image: "openmicroscopy/omero-server:5.6"
+    image: "openmicroscopy/omero-server:5.6.4"
     environment:
       - CONFIG_omero_db_host=
       - CONFIG_omero_db_user=
@@ -42,5 +42,5 @@ networks:
   omero-network:
 
 volumes:
-  omero-db-volume:
-  omero-server-volume:
+  omero-db:
+  omero-server:
