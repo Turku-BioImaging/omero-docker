@@ -3,14 +3,14 @@ version: "3"
 services:
 
   database:
-    image: "postgres:11"
+    image: "postgres:11.15"
     environment:
-      # - POSTGRES_USER_FILE=/run/secrets/postgres_user
-      # - POSTGRES_DB=omero
-      # - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
-      POSTGRES_USER: omero
+      POSTGRES_USER_FILE: /run/secrets/postgres_user
       POSTGRES_DB: omero
-      POSTGRES_PASSWORD: omero
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      # POSTGRES_USER: omero
+      # POSTGRES_DB: omero
+      # POSTGRES_PASSWORD: omero
     networks:
       - omero-network
     volumes:
@@ -21,14 +21,14 @@ services:
 
   omeroserver:
     image: "openmicroscopy/omero-server:5.6"
-    # env_file:
-    #   - ./secrets/.env.omeroserver
-    environment:
-      CONFIG_omero_db_host: database
-      CONFIG_omero_db_user: omero
-      CONFIG_omero_db_pass: omero
-      CONFIG_omero_db_name: omero
-      ROOTPASS: omero
+    env_file:
+      - ./secrets/.env.omeroserver
+    # environment:
+    #   CONFIG_omero_db_host: database
+    #   CONFIG_omero_db_user: omero
+    #   CONFIG_omero_db_pass: omero
+    #   CONFIG_omero_db_name: omero
+    #   ROOTPASS: omero
     networks:
       - omero-network
     ports:
