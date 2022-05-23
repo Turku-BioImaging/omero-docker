@@ -3,7 +3,7 @@ version: "3"
 services:
 
   database:
-    image: "postgres:9.6"
+    image: "postgres:11"
     environment:
       - POSTGRES_USER_FILE=/run/secrets/postgres_user
       - POSTGRES_DB=omero
@@ -11,7 +11,7 @@ services:
     networks:
       - omero-network
     volumes:
-      - "omero-db:/run/lib/postgresql/data"
+      - "omero-db:/var/lib/postgresql/data"
     secrets:
       - postgres_user
       - postgres_password
@@ -31,11 +31,9 @@ services:
       - "omero-server:/OMERO"
 
   omeroweb:
-    image: "openmicroscopy/omero-web-standalone:master"
-    links:
-      - omeroserver:omero
+    image: "openmicroscopy/omero-web-standalone:5.14"
     environment:
-      - OMEROHOST=omero
+      OMEROHOST: omeroserver
     networks:
       - omero-network
 
