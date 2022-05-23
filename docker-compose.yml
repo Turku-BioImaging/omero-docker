@@ -5,9 +5,12 @@ services:
   database:
     image: "postgres:11"
     environment:
-      - POSTGRES_USER_FILE=/run/secrets/postgres_user
-      - POSTGRES_DB=omero
-      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
+      # - POSTGRES_USER_FILE=/run/secrets/postgres_user
+      # - POSTGRES_DB=omero
+      # - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
+      POSTGRES_USER: omero
+      POSTGRES_DB: omero
+      POSTGRES_PASSWORD: omero
     networks:
       - omero-network
     volumes:
