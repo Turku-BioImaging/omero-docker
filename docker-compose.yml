@@ -43,6 +43,8 @@ services:
       OMEROHOST: omeroserver
     networks:
       - omero-network
+    ports:
+      - 4080:4080
 
 networks:
   omero-network:
